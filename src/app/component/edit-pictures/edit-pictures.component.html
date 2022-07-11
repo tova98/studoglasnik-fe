@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Delete pictures?</h2>
+<mat-dialog-content>
+    <h3 *ngIf="data">Choose which pictures you want to delete:</h3>
+    <mat-grid-list cols="3">
+        <mat-grid-tile *ngFor="let picture of data.pictures">
+            <img class="tile-image" [ngClass]="deleteList.includes(picture) ? 'border-red' : ''" (click)="onPictureSelect($event, picture)"[src]="('http://localhost:8080/pictures/' + picture) | safe">
+        </mat-grid-tile>
+    </mat-grid-list>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button mr-2" mat-dialog-close>Close</button>
+    <button class="mat-raised-button mat-warn"(click)="saveChanges()">Save changes</button>
+</mat-dialog-actions>

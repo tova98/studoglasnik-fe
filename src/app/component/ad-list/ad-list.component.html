@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row ad-row my-3">
+        <div class="col-lg-12 py-3">
+            <form (ngSubmit)="onFilter()" [formGroup]="filterForm">
+                <div class="form-row">
+                    <div class="form-col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Title</mat-label>
+                            <input #title matInput formControlName="title" (input)="title.value = title.value.toLowerCase()">
+                            <mat-hint>Filter by title:</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Category</mat-label>
+                            <mat-select matSelect formControlName="category">
+                              <mat-option [value]="category" *ngFor="let category of categories"> {{ category.name }}</mat-option>
+                            </mat-select>
+                            <mat-hint>Filter by category:</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Location</mat-label>
+                            <mat-select matSelect formControlName="location">
+                              <mat-option [value]="location" *ngFor="let location of locations"> {{ location.name }}</mat-option>
+                            </mat-select>
+                            <mat-hint>Filter by location:</mat-hint>
+                        </mat-form-field> 
+                    </div>
+                    <div class="form-col">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Price from</mat-label>
+                            <input type="number" matInput formControlName="priceFrom">
+                            <mat-hint>Filter by price from:</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Price to</mat-label>
+                            <input type="number" matInput formControlName="priceTo">
+                            <mat-hint>Filter by price to:</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field id="expiredCheckbox" appearance="outline">
+                            <input hidden=true matInput>
+                            <mat-checkbox formControlName="expired" color="primary"> Show expired?</mat-checkbox>
+                            <mat-hint>Show expired:</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button mat-raised-button color="primary" type="submit" class="mt-3">Filter</button>
+                    <button mat-raised-button color="accent"type="reset" class="ml-2 mt-3">Clear Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row ad-row my-4">
+        <mat-paginator #paginator [length]="length"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="changePage($event)">
+
+        </mat-paginator>
+    </div>
+    <div class="row ad-row my-4" *ngFor="let ad of ads">
+        <div class="col-xl-5 col-lg-6 col-md-6 col-sm-12 bg-image" [ngClass]="{'bg-image-none': ad.pictures.length === 0}" [routerLink]="['/ad', ad.id]">
+            <img class="ad-image" *ngIf="ad.pictures.length > 0" [src]="('http://localhost:8080/pictures/' + ad.pictures[0]) | safe">
+        </div>
+        <div class="col-xl-5 col-lg-4 col-md-4 col-sm-12 py-3">
+            <a class="h3 text-primary ad-title" [routerLink]="['/ad', ad.id]">{{ ad.title }}</a>
+            <h5 class="pt-4">Category: {{ ad.category.name }}</h5>
+            <h5>Location: {{ ad.location.name }}</h5>
+            <h5>Published at: {{ ad.publishDate }}</h5>
+        </div>
+        <div class="col-md-2 col-sm-12">
+            <button *ngIf="canManage()" class="btn btn-danger custom-btn my-3 float-md-right float-sm-left" (click)="delete(ad.id)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+            <button *ngIf="canManage()" class="btn btn-primary custom-btn my-3 mx-2 float-md-right float-sm-left" [routerLink]="['/edit-ad', ad.id]"><fa-icon [icon]="faPen"></fa-icon></button>
+            <h5 class="ad-price py-3 px-4">{{ ad.price }} kn</h5>
+        </div>
+    </div>
+</div>

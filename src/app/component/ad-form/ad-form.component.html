@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row my-3 py-5 px-2">
+    <div class="col-lg-12">
+      <form (ngSubmit)="onSubmit()" [formGroup]="adForm">
+        <h1 *ngIf="isAddMode">New Ad</h1>
+        <h1 *ngIf="!isAddMode">Edit Ad</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title">
+          <mat-hint>Enter ad title:</mat-hint>
+          <mat-error>Ad title is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea rows="5" mat-line matInput formControlName="description"></textarea>
+          <mat-hint>Enter ad description:</mat-hint>
+          <mat-error>Ad description is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input type="number" #price matInput formControlName="price">
+          <mat-hint>Enter ad price:</mat-hint>
+          <mat-error>Ad price is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline" *ngIf="isAddMode">
+          <mat-label>Duration</mat-label>
+          <input type="number" matInput formControlName="duration">
+          <mat-hint>Enter ad duration:</mat-hint>
+          <mat-error>Ad duration is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select matSelect formControlName="category" [compareWith]="compare">
+            <mat-option [value]="category" *ngFor="let category of categories" selected> {{ category.name }}</mat-option>
+          </mat-select>
+          <mat-hint>Select ad category:</mat-hint>
+          <mat-error>Ad category is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Location</mat-label>
+          <mat-select matSelect formControlName="location" [compareWith]="compare">
+            <mat-option [value]="location" *ngFor="let location of locations"> {{ location.name }}</mat-option>
+          </mat-select>
+          <mat-hint>Select ad location:</mat-hint>
+          <mat-error>Ad location is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <div class="picture-upload-field" *ngIf="!isAddMode">
+          <button type="button" mat-raised-button (click)="editPictures()">Delete pictures</button>
+          <span class="files-selected">{{ deleteFilesSelected }}</span>
+          <div class="picture-hint">
+            <mat-hint>Select pictures to delete:</mat-hint>
+          </div>
+        </div>
+        <br>
+        <div class="picture-upload-field">
+          <button type="button" mat-raised-button (click)="pictureInput.click()"> {{ isAddMode ? 'Add pictures' : 'Choose new pictures' }} </button>
+          <input hidden type="file" multiple #pictureInput (change)="onPictureChange($event)">
+          <span class="files-selected">{{ filesSelected }}</span>
+          <br>
+          <div class="picture-hint">
+            <mat-hint>Select pictures:</mat-hint>
+          </div>
+        </div>
+        <br>
+        <button mat-raised-button type="submit" [disabled]="!adForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

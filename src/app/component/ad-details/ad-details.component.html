@@ -1,0 +1,54 @@
+<div class="container" *ngIf="ad.id">
+    <div class="row ad-row my-3">
+        <div class="col-12 bg-image" *ngIf="ad.pictures.length > 0">
+            <img #preview class="ad-image" [src]="('http://localhost:8080/pictures/' + ad.pictures[0]) | safe">
+            <div class="row ad-image-pick-row">
+                <div class="col-xl-2 col-md-3 col-sm-4 col-6 my-2" *ngFor="let picture of ad.pictures">
+                    <img class="ad-image-pick" (click)="setPreviewImage(picture)" [src]="('http://localhost:8080/pictures/' + picture) | safe">
+                </div>
+            </div>
+        </div>
+        <div class="col-12 p-4">
+            <div class="d-flex flex-row">
+                <h3 class="text-primary push-btns-right">{{ ad.title }}</h3>
+                <button *ngIf="canManage()" class="btn btn-primary custom-btn" [routerLink]="['/edit-ad', ad.id]"><fa-icon [icon]="faPen"></fa-icon></button>
+                <button *ngIf="canManage()" class="btn btn-danger custom-btn ml-2" (click)="delete(ad.id)"><fa-icon [icon]="faTrashCan"></fa-icon></button>
+            </div>
+            <h5>{{ ad.category.name }}</h5>
+            <h5>{{ ad.location.name }}</h5>
+            <h6 class="ad-price pr-3">{{ ad.price }} kn</h6>
+        </div>
+    </div>
+    <div class="row ad-row my-3 px-2 py-4">
+        <div class="col-12">
+            <h3>Description</h3>
+            <p style="white-space: pre-line">{{ ad.description }}</p>
+        </div>
+    </div>
+    <div class="row ad-row my-3 px-2 py-4">
+        <div class="col-12">
+            <h3>Contact info</h3>
+            <h5>username: {{ ad.contactUser.username }}</h5>
+            <h5>email: {{ ad.contactUser.email }}</h5>
+            <h5>phone number: {{ ad.contactUser.phoneNumber }}</h5>
+        </div>
+    </div>
+    <div class="row ad-row my-3 px-2 py-4">
+        <div class="col-12">
+            <h3>Location</h3>
+            <h5>Name: {{ ad.location.name }}</h5>
+            <h5>Address: {{ ad.location.address }}</h5>
+            <iframe [src]="ad.location.googleMapsLink | safe"
+                width=100% height="400px"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </div>
+    <div class="row ad-row my-3 px-2 py-4">
+        <div class="col-12">
+            <h3>Other information</h3>
+            <h5>Published at: {{ ad.publishDate }}</h5>
+            <h5>Expires at: {{ ad.expireDate }}</h5>
+        </div>
+    </div>
+</div>

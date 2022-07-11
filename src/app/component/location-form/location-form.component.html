@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row my-3 py-5 px-2">
+    <div class="col-lg-12">
+      <form (ngSubmit)="onSubmit()" [formGroup]="locationForm">
+        <h1 *ngIf="isAddMode">Add Location</h1>
+        <h1 *ngIf="!isAddMode">Edit Location</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name">
+          <mat-hint>Enter location name:</mat-hint>
+          <mat-error>Location name is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address">
+          <mat-hint>Enter location address:</mat-hint>
+          <mat-error>Location address is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Link</mat-label>
+          <input matInput formControlName="googleMapsLink">
+          <mat-hint>Enter location link:</mat-hint>
+          <mat-error>Location link is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button type="submit" [disabled]="!locationForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

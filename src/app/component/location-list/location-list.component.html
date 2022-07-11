@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row my-3 py-5 px-2">
+    <div class="col-lg-12">
+      <h1>Locations</h1>
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" style="width: 9%">#</th>
+            <th scope="col" style="width: 27%">Name</th>
+            <th scope="col" style="width: 27%">Address</th>
+            <th scope="col" style="width: 27%">GoogleMapsLink</th>
+            <th scope="col" style="width: 5%"></th>
+            <th scope="col" style="width: 5%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let location of locations">
+            <td>{{ location.id }}</td>
+            <td>{{ location.name }}</td>
+            <td>{{ location.address }}</td>
+            <td>{{ location.googleMapsLink.substring(0, 50) }}...</td>
+            <td>
+              <button class="btn btn-warning" [routerLink]="['/edit-location', location.id]">
+                <fa-icon [icon]="faPen"></fa-icon>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-danger" (click)="delete(location.id)">
+                <fa-icon [icon]="faTrashCan"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

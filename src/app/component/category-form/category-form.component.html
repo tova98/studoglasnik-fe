@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row my-3 py-5 px-2">
+    <div class="col-lg-12">
+      <form (ngSubmit)="onSubmit()" [formGroup]="categoryForm">
+        <h1 *ngIf="isAddMode">Add Category</h1>
+        <h1 *ngIf="!isAddMode">Edit Category</h1>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" placeholder="test">
+          <mat-hint>Enter category name:</mat-hint>
+          <mat-error>Category name is required!</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button type="submit" [disabled]="!categoryForm.valid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Change profile picture?</h2>
+<mat-dialog-content>
+    <form>
+        <div class="picture-upload-field">
+            <button type="button" mat-raised-button (click)="pictureInput.click()"> Choose a picture </button>
+            <input hidden type="file" multiple #pictureInput (change)="onPictureChange($event)">
+            <span class="files-selected"> {{ pictureSelected }} </span>
+            <br>
+            <div class="picture-hint">
+              <mat-hint>Select pictures:</mat-hint>
+            </div>
+          </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="mat-raised-button mr-2" mat-dialog-close>Close</button>
+    <button class="mat-raised-button mat-warn"(click)="changePicture()" [disabled]="!selectedPicture">Change</button>
+</mat-dialog-actions>
